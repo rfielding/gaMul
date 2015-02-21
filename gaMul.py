@@ -1,4 +1,7 @@
 #!/usr/bin/env python
+
+dims = 5
+
 class SparseArray:
     def __init__(self):
         self.data = {}
@@ -16,8 +19,8 @@ class SparseArray:
         kvs = []
         for k in self.data:
             v = self.data[k]
-            kvs.append("{0}:{1}".format(k,v))
-        return "{ %s }" % (",".join(kvs))
+            kvs.append(("{0:0%db}:{1}" % dims).format(k,v))
+        return "{ %s }" % (", ".join(kvs))
 
 #Count the number of swaps to sort indices and get right sign, and xor indices to get return index
 def destIdx(ai,bi):
@@ -38,7 +41,8 @@ def destIdx(ai,bi):
     return retidx, multiplier
 
 #Multiplication is iterating over O( 2^(2d) ) possible contributions to place them in the right part of the result
-def mul(d,a,b):
+def mul(a,b):
+    d =  dims
     answer = SparseArray()
     n = (1<<d) #only required to figure out how far to compute. Sparse arrays may tell us this too
     for ai in range(0,n):
@@ -47,7 +51,8 @@ def mul(d,a,b):
             answer[i] += multiplier * a[ai] * b[bi]
     return answer
 
-def add(d,a,b):
+def add(a,b):
+    d = dims
     answer = SparseArray()
     n = (1<<d)
     for ai in range(0,n):
@@ -63,5 +68,7 @@ a1[0b001] = 2
 a1[0b100] = 3
 
 #Checks out with example from: http://math.stackexchange.com/questions/916998/product-between-multivectors
-print str(mul(3, a, a1))
+print str(a)
+print str(a1)
+print str(mul(a, a1))
 
