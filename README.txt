@@ -34,6 +34,9 @@ The two key things are
   * just to have multivectors be arrays of length 2^(1<<d) for whatever dimension is supported.
   * use bit addressing to find the elements
   * use a function that counts bitswaps (currently horribly inefficient) to find sign
+  * xor is the key thing to making it conceptually simple
+  * the popCount function (counting the number of bits in an integer efficiently) lets the blades be classified efficiently, and sorted to find the sign efficiently
+  * there is quite a bit of waste however in not making special cases for the multiplies, which will make this definition very hard to understand like normal definitions are
 
 For cases where the dimensions are not orthogonal, the function that determines i and multiplier will differ.
 But the distribution of multiplication over addition, and commuting of scalars with basis vectors fixes everything except for that function returning (i, multiplier)
