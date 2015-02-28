@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-dims = 5
+dims = 3
 
 class MultiVector:
     def __init__(self):
@@ -46,7 +46,6 @@ class MultiVector:
 
     def mul(self,b):
         a = self
-        d =  dims
         answer = MultiVector()
         for ai in a:
             for bi in b:
@@ -56,7 +55,6 @@ class MultiVector:
 
     def add(self,b):
         a = self
-        d = dims
         answer = MultiVector()
         for ai in a:
             answer[ai] += a[ai] + b[ai]
