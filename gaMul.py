@@ -1,7 +1,5 @@
 #!/usr/bin/env python
 
-dims = 3
-
 class MultiVector:
     def __init__(self):
         self.data = {}
@@ -13,14 +11,25 @@ class MultiVector:
     def __setitem__(self,k,v):
         if v==0:
             if k in self.data: del self.data[k]
-        else: self.data[k] = v
+        else:
+            self.data[k] = v
+
+    def nameBlade(self, v):
+        bladeNames = []
+        i = 1;
+        while v != 0:
+            if v % 2:
+                bladeNames.append( "e{0}".format(i) )
+            v = v / 2
+            i = i + 1
+        return "^".join(bladeNames)
 
     def __str__(self):
         kvs = []
         for k in self.data:
             v = self.data[k]
-            kvs.append(("{0:0%db}:{1}" % dims).format(k,v))
-        return "{ %s }" % (", ".join(kvs))
+            kvs.append( "{0}*{1}".format(v, self.nameBlade(k)) )
+        return (" + ".join(kvs))
 
     def __iter__(self):
         for k in self.data:
