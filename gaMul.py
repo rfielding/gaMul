@@ -2,7 +2,7 @@
 
 dims = 5
 
-class SparseArray:
+class MultiVector:
     def __init__(self):
         self.data = {}
 
@@ -26,6 +26,7 @@ class SparseArray:
         for k in self.data:
             yield k
 
+    #This only supports ORTHOGONAL basis, of a large number of dimensions
     def destIdx(self, ai,bi):
         retidx, multiplier = ai^bi, 1
         stack, didSwap = [], True
@@ -46,7 +47,7 @@ class SparseArray:
     def mul(self,b):
         a = self
         d =  dims
-        answer = SparseArray()
+        answer = MultiVector()
         for ai in a:
             for bi in b:
                 i, multiplier = self.destIdx(ai,bi)
@@ -56,13 +57,13 @@ class SparseArray:
     def add(self,b):
         a = self
         d = dims
-        answer = SparseArray()
+        answer = MultiVector()
         for ai in a:
             answer[ai] += a[ai] + b[ai]
         return answer
 
-a=SparseArray()
-a1=SparseArray()
+a=MultiVector()
+a1=MultiVector()
 
 a[0b001] = 1
 a[0b010] = 2
